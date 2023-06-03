@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS users CASCADE;
 DROP TABLE IF EXISTS trips CASCADE;
+DROP TABLE IF EXISTS trip_sections CASCADE;
 DROP TABLE IF EXISTS ideas CASCADE;
 DROP TABLE IF EXISTS friendships CASCADE;
 DROP TABLE IF EXISTS trip_collaborators CASCADE;
@@ -32,7 +33,18 @@ CREATE TABLE trips (
         FOREIGN KEY(user_id)
         REFERENCES users(id)
         ON DELETE CASCADE,
-  name VARCHAR(255) NOT NULL
+  name VARCHAR(255) NOT NULL,
+  start_date DATE NOT NULL,
+  end_date DATE NOT NULL
+);
+
+CREATE TABLE trip_sections (
+  id SERIAL PRIMARY KEY,
+  trip_id INT,
+        FOREIGN KEY (trip_id) 
+        REFERENCES trips(id) 
+        ON DELETE CASCADE,
+  section_name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE trip_collaborators (
@@ -50,9 +62,12 @@ CREATE TABLE trip_collaborators (
 CREATE TABLE ideas (
   id SERIAL PRIMARY KEY,
   trip_id INT,
-        CONSTRAINT fk_ideas_trips
-        FOREIGN KEY(trip_id)
-        REFERENCES trips(id)
+        FOREIGN KEY (trip_id) 
+        REFERENCES trips(id) 
+        ON DELETE CASCADE,
+  section_id INT,
+        FOREIGN KEY (section_id) 
+        REFERENCES trip_sections(id) 
         ON DELETE CASCADE,
   name VARCHAR(255) NOT NULL,
   description TEXT,

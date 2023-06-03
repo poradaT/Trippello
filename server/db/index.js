@@ -1,7 +1,7 @@
-const pg = require('pg')
+const pg = require("pg");
 
 const db = new pg.Pool({
-  database: process.env.DB_NAME || 'trippello'
-})
+  database: process.env.DB_NAME || "trippello",
+});
 
-module.exports = db
+module.exports = db;
