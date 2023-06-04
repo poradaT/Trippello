@@ -1,5 +1,4 @@
 const express = require("express");
-
 const bcrypt = require("bcrypt");
 const { getUserByEmail } = require("../models/user");
 
@@ -20,6 +19,12 @@ router.post("/session", async (req, res, next) => {
     if (!passwordMatch) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
+
+    // Store the authenticated user in the session
+    req.session.user = user;
+    
+    // Return the user data
+    return res.status(200).json({ user });
   } catch (err) {
     next(err);
   }

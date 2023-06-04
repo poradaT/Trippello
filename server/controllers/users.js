@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcrypt");
 const {
   getAllUsers,
   getUserById,
@@ -9,57 +10,79 @@ const {
   deleteUserById,
 } = require("../models/user");
 
-router.get("/users", (req, res, next) => {
-  return getAllUsers()
-    .then((users) => res.json(users))
-    .catch((err) => next(err));
-});
+// const generateHash = (password) => {
+//   if (!password) {
+//     throw new Error("Password is required.");
+//   }
+//   return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+// };
 
-router.get("/users/:userId", (req, res, next) => {
-  const userId = Number(req.params.userId);
-  return getUserById(userId)
-    .then((user) => res.json(user))
-    .catch((err) => next(err));
-});
-
-router.get("/users/email/:email", (req, res, next) => {
-  const email = req.params.email;
-  getUserByEmail(email)
-    .then((user) => {
-      return res.status(200).json({ user });
-    })
-    .catch((err) => {
+router.get("/users", async (req, res, next) => {
+    try {
+      const users = await getAllUsers();
+      res.json(users);
+    } catch (err) {
       next(err);
-    });
-});
+    }
+  });
 
-router.post("/users", (req, res, next) => {
-  const { user_name, first_name, last_name, email, password_hash } = req.body;
-  return createUser({ user_name, first_name, last_name, email, password_hash })
-    .then((user) => res.json(user))
-    .catch((err) => next(err));
-});
+  router.get("/users/:userId", async (req, res, next) => {
+    try {
+      const userId = Number(req.params.userId);
+      const user = await getUserById(userId);
+      res.json(user);
+    } catch (err) {
+      next(err);
+    }
+  });
 
-router.put("/users/:userId", (req, res, next) => {
-  const userId = Number(req.params.userId);
-  const { user_name, first_name, last_name, email, password_hash } = req.body;
-  const userUpdates = {
-    user_name,
-    first_name,
-    last_name,
-    email,
-    password_hash,
-  };
-  return updateUserById(userId, userUpdates)
-    .then((user) => res.json(user))
-    .catch((err) => next(err));
-});
+router.get("/users/email/:email", async (req, res, next) => {
+    try {
+      const email = req.params.email;
+      const user = await getUserByEmail(email);
+      res.status(200).json({ user });
+    } catch (err) {
+      next(err);
+    }
+  });
 
-router.delete("/users/:userId", (req, res, next) => {
-  const userId = Number(req.params.userId);
-  return deleteUserById(userId)
-    .then(() => res.json({ message: "User deleted successfully" }))
-    .catch((err) => next(err));
-});
+  const generateHash = require("../utils/passwordUtils");
+  router.post("/users", async (req, res, next) => {
+    try {
+      const { user_name, email, password } = req.body;
+      const password_hash = generateHash(password);
+      const user = await createUser({ user_name, email, password_hash });
+      res.json(user);
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  router.put("/users/:userId", async (req, res, next) => {
+    try {
+      const userId = Number(req.params.userId);
+      const { user_name, email, password } = req.body;
+      const password_hash = generateHash(password);
+      const userUpdates = {
+        user_name,
+        email,
+        password_hash,
+      };
+      const user = await updateUserById(userId, userUpdates);
+      res.json(user);
+    } catch (err) {
+      next(err);
+    }
+  });
+
+  router.delete("/users/:userId", async (req, res, next) => {
+    try {
+      const userId = Number(req.params.userId);
+      await deleteUserById(userId);
+      res.json({ message: "User deleted successfully" });
+    } catch (err) {
+      next(err);
+    }
+  });
 
 module.exports = router;

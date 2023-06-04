@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {
   getAllIdeas,
-  getIdeasByTripIdAndSectionId,
+  getIdeasBySectionId,
   createIdea,
   updateIdeaById,
   deleteIdeaById,
@@ -14,25 +14,24 @@ router.get("/ideas", (req, res, next) => {
     .catch((err) => next(err));
 });
 
-router.get("/trips/:tripId/sections/:sectionId/ideas", (req, res, next) => {
-  const tripId = Number(req.params.tripId);
+router.get("/sections/:sectionId/ideas", (req, res, next) => {
   const sectionId = Number(req.params.sectionId);
-  return getIdeasByTripIdAndSectionId(tripId, sectionId)
+  return getIdeasBySectionId(sectionId)
     .then((ideas) => res.json(ideas))
     .catch((err) => next(err));
 });
 
 router.post("/ideas", (req, res, next) => {
-  const { trip_id, section_id, name, description, image_data } = req.body;
-  return createIdea({ trip_id, section_id, name, description, image_data })
+  const { section_id, name, description } = req.body;
+  return createIdea({ section_id, name, description})
     .then((idea) => res.json(idea))
     .catch((err) => next(err));
 });
 
 router.put("/ideas/:ideaId", (req, res, next) => {
   const ideaId = Number(req.params.ideaId);
-  const { name, description, image_data } = req.body;
-  const ideaUpdates = { name, description, image_data };
+  const { name, description } = req.body;
+  const ideaUpdates = { name, description };
   return updateIdeaById(ideaId, ideaUpdates)
     .then((idea) => res.json(idea))
     .catch((err) => next(err));

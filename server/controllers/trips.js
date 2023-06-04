@@ -22,16 +22,16 @@ router.get("/trips/:tripId", (req, res, next) => {
 });
 
 router.post("/trips", (req, res, next) => {
-  const { user_id, name, start_date, end_date } = req.body;
-  return createTrip({ user_id, name, start_date, end_date })
-    .then((trip) => res.json(trip))
-    .catch((err) => next(err));
-});
+    const { user_id, name, start_date, end_date, is_public, is_active } = req.body;
+    return createTrip({ user_id, name, start_date, end_date, is_public, is_active })
+      .then((trip) => res.json(trip))
+      .catch((err) => next(err));
+  });
 
 router.put("/trips/:tripId", (req, res, next) => {
   const tripId = Number(req.params.tripId);
-  const { name, start_date, end_date } = req.body;
-  const tripUpdates = { name, start_date, end_date };
+  const { name, start_date, end_date, is_public, is_active } = req.body;
+  const tripUpdates = { name, start_date, end_date, is_public, is_active };
   return updateTripById(tripId, tripUpdates)
     .then((trip) => res.json(trip))
     .catch((err) => next(err));
