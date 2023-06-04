@@ -13,52 +13,61 @@ Trippello is a web application for managing and organizing your trips. This repo
 ### Database Setup
 
 1. Create a PostgreSQL database named "trippello" by running the following command:
-createdb trippello
+```createdb trippello```
 
 2. Navigate to the server directory:
-cd server
+```cd server```
 
 3. Import the database schema and seed data into the "trippello" database:
-psql -d trippello < db/schema.sql
-psql -d trippello < db/seed.sql
+```sh
+   psql -d trippello < db/schema.sql
+   psql -d trippello < db/seed.sql
+```
 
 ### Server Setup
 
 1. Create a `.env` file in the server directory and configure the following environment variables:
+
+```
 PORT=3000
 SECRET_KEY=YOUR_SECRET_KEY
 DB_NAME=trippello
+```
 
 Replace `YOUR_SECRET_KEY` with your desired secret key.
 
 2. Install the server dependencies:
-npm install
+```npm install```
 
 3. Start the server using nodemon (for development):
-nodemon
+```nodemon```
 
 Alternatively, you can use `node app.js` to start the server without nodemon.
 
 ### Client Setup
 
 1. Navigate to the client directory:
-cd client
+```cd client```
 
 2. Install the client dependencies:
-npm install
+```npm install```
 
 3. Start the client development server:
-npm run dev
+```npm run dev```
 
 This will launch the Trippello web application in your browser.
 
 
 ## Directory Structure
 
+```text
 trippello
 ├── README.md
 ├── client
 └── server
+```
+
+---
 
 
 
