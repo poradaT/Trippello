@@ -28,6 +28,7 @@ CREATE TABLE trips (
 );
 
 CREATE TABLE trip_members (
+  id SERIAL PRIMARY KEY,
   user_id INT, 
         FOREIGN KEY (user_id) 
         REFERENCES users(id) 
@@ -37,7 +38,6 @@ CREATE TABLE trip_members (
         REFERENCES trips(id) 
         ON DELETE CASCADE
 );
-
 
 CREATE TABLE sections (
   id SERIAL PRIMARY KEY,

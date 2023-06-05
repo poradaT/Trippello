@@ -1,16 +1,40 @@
 const db = require("./index");
 
-const getAllTrips = async () => {
-  const query = "SELECT * FROM trips";
-  const { rows } = await db.query(query);
-  return rows;
-};
+// const getAllTrips = async () => {
+//   const query = "SELECT * FROM trips";
+//   const { rows } = await db.query(query);
+//   return rows;
+// };
 
-const getTripById = async (tripId) => {
-  const query = "SELECT * FROM trips WHERE id = $1";
-  const { rows } = await db.query(query, [tripId]);
-  return rows[0];
-};
+const getAllTrips = async (userId) => {
+    const query = `
+      SELECT trips.* 
+      FROM trips 
+      INNER JOIN trip_members ON trip_members.trip_id = trips.id 
+      WHERE trip_members.user_id = $1
+    `;
+    const values = [userId];
+    const { rows } = await db.query(query, values);
+    return rows;
+  };
+  
+// const getTripById = async (tripId) => {
+//   const query = "SELECT * FROM trips WHERE id = $1";
+//   const { rows } = await db.query(query, [tripId]);
+//   return rows[0];
+// };
+
+const getTripById = async (tripId, userId) => {
+    const query = `
+      SELECT trips.* 
+      FROM trips 
+      INNER JOIN trip_members ON trip_members.trip_id = trips.id 
+      WHERE trip_members.user_id = $1 AND trips.id = $2
+    `;
+    const values = [userId, tripId];
+    const { rows } = await db.query(query, values);
+    return rows[0];
+  };
 
 const createTrip = async (trip) => {
     const { user_id, name, start_date, end_date, is_public, is_active } = trip;

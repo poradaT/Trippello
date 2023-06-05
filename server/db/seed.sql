@@ -4,11 +4,12 @@ ALTER SEQUENCE ideas_id_seq RESTART WITH 1;
 ALTER SEQUENCE sections_id_seq RESTART WITH 1;
 ALTER SEQUENCE trips_id_seq RESTART WITH 1;
 ALTER SEQUENCE users_id_seq RESTART WITH 1;
+ALTER SEQUENCE trip_members_id_seq RESTART WITH 1;
 
 INSERT INTO users (user_name, email, password_hash) VALUES
-  ('Bon', 'bon@gmail.com', 'password1'),
-  ('Mike', 'mike@gmail.com', 'password2'),
-  ('AJ', 'aj@gmail.com', 'password3');
+  ('Bon', 'bon@gmail.com', '$2a$10$BpGLz77zY0vgeWze/qgTYu6XcYmD7lW/wMMI3d2PRb00PuCxgOER.'),
+  ('Mike', 'mike@gmail.com', '$2a$10$H0r9eXJMQojxDNV0fNNpveOJz1Kcwihb0s0XZzIANNWPUImfRCG/.'),
+  ('AJ', 'aj@gmail.com', '$2a$10$IDgwFsDn892jyzAkxIvmc.Zg4SRyrqidv0J9wveKTLV5hyyLC5Wg2');
 
 INSERT INTO trips (user_id, name, start_date, end_date, is_public, is_active) VALUES
   (1, 'Trip to Paris', '2023-06-10', '2023-06-15', true, true),
@@ -42,3 +43,9 @@ INSERT INTO comments (user_id, idea_id, comment, comment_date) VALUES
 INSERT INTO attachments (idea_id, filename, location) VALUES
   (1, 'eiffel_tower.jpg', '/attachments/eiffel_tower.jpg'),
   (2, 'louvre_museum.jpg', '/attachments/louvre_museum.jpg');
+
+  INSERT INTO trip_members (user_id, trip_id) VALUES
+  (1, 1),
+  (2, 1),
+  (2, 2),
+  (3, 3);

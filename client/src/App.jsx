@@ -5,7 +5,10 @@ import Home from "./pages/Home";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import PrivateRoutes from "./components/PrivateRoutes";
-import './App.css'
+import Trip from "./components/Trip";
+import Section from "./components/Section";
+import Idea from "./components/Idea";
+import "./App.css";
 
 function App() {
   const { user, logout } = useAuth();
@@ -14,7 +17,7 @@ function App() {
   const handleLogout = async () => {
     try {
       await logout();
-      navigate("/login"); 
+      navigate("/login");
     } catch (err) {
       console.error(err);
     }
@@ -27,9 +30,10 @@ function App() {
           {user ? (
             <>
               <li>
-                <Link to="/">Home</Link>
+                <Link to="/">My Trips</Link>
               </li>
               <br />
+
               <li>
                 <button onClick={handleLogout}>Logout</button>
               </li>
@@ -50,12 +54,12 @@ function App() {
       </nav>
 
       <Routes>
-        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />  
+        <Route path="/register" element={<Register />} />
         <Route element={<PrivateRoutes redirectTo="/login" />}>
-            <Route path="/" element={<Home />} />
-        </Route>   
+          <Route path="/" element={<Home />} />
+          <Route path="/trips/:tripId/sections" element={<Trip />} />
+        </Route>
       </Routes>
     </>
   );

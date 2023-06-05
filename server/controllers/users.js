@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const bcrypt = require("bcrypt");
 const {
   getAllUsers,
   getUserById,
@@ -9,13 +8,6 @@ const {
   updateUserById,
   deleteUserById,
 } = require("../models/user");
-
-// const generateHash = (password) => {
-//   if (!password) {
-//     throw new Error("Password is required.");
-//   }
-//   return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
-// };
 
 router.get("/users", async (req, res, next) => {
     try {

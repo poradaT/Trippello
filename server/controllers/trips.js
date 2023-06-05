@@ -9,14 +9,26 @@ const {
 } = require("../models/trip");
 
 router.get("/trips", (req, res, next) => {
-  return getAllTrips()
+    const user = req.session.user;
+  if (!user) {
+    return res.status(401).json({ message: "User not authenticated" });
+  }
+
+    const userId = req.session.user.id;
+  return getAllTrips(userId)
     .then((trips) => res.json(trips))
     .catch((err) => next(err));
 });
 
 router.get("/trips/:tripId", (req, res, next) => {
+    const user = req.session.user;
+  if (!user) {
+    return res.status(401).json({ message: "User not authenticated" });
+  }
+  
   const tripId = Number(req.params.tripId);
-  return getTripById(tripId)
+  const userId = req.session.user.id;
+  return getTripById(tripId, userId)
     .then((trip) => res.json(trip))
     .catch((err) => next(err));
 });

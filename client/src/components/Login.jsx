@@ -12,6 +12,7 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const formData = {
         email: email,
@@ -29,9 +30,9 @@ const Login = () => {
   }
 
   return (
-    <div>
+    <div className="login__container">
       <h2>Login</h2>
-      <form onSubmit={handleSubmit}>
+      <form className="login__form" onSubmit={handleSubmit}>
         <input
           type="email"
           name="email"

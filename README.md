@@ -40,7 +40,7 @@ Replace `YOUR_SECRET_KEY` with your desired secret key.
 ```npm install```
 
 3. Start the server using nodemon (for development):
-```nodemon```
+```npm start```
 
 Alternatively, you can use `node app.js` to start the server without nodemon.
 

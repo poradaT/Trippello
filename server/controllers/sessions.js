@@ -5,6 +5,7 @@ const { getUserByEmail } = require("../models/user");
 const router = express.Router();
 
 router.post("/session", async (req, res, next) => {
+  console.log("Reached /session route");
   try {
     const { email, password } = req.body;
 
@@ -20,27 +21,31 @@ router.post("/session", async (req, res, next) => {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
+    delete user.password_hash;
+
     // Store the authenticated user in the session
     req.session.user = user;
-    
+    console.log("User stored in session:", req.session.user);
+
     // Return the user data
-    return res.status(200).json({ user });
+    res.json(user);
   } catch (err) {
+    console.log("Error in /session route:", err);
     next(err);
   }
 });
 
-router.get("/session", (req, res) => {
+router.get('/session', (req, res, next) => {
   const { user } = req.session;
-  return res.status(200).json({ user });
+  if (!user) {
+    return res.status(401).json({ message: 'Not logged in' });
+  }
+  res.json(user);
 });
 
-router.delete("/session", async (req, res) => {
-  req.session.destroy(() => {
-    return res.status(200).json({
-      message: "Logged out",
-    });
-  });
+router.delete('/session', (req, res, next) => {
+  req.session.destroy();
+  res.json({ message: 'Logged out successfully' });
 });
 
 module.exports = router;
