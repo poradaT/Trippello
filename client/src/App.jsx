@@ -15,16 +15,15 @@ function App() {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-        try {
-          await logout();
-          navigate("/login");
-        } catch (err) {
-          console.error(err);
-        }
-      };
+    try {
+      await logout();
+      navigate("/login");
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   useEffect(() => {
-    
     const fetchTrips = async () => {
       try {
         const res = await fetch("http://localhost:3000/api/trips");
@@ -39,8 +38,9 @@ function App() {
   }, []);
 
   const handleNewTrip = (newTrip) => {
-    const { user_id, name, start_date, end_date, is_public, is_active } = newTrip;
-  
+    const { user_id, name, start_date, end_date, is_public, is_active } =
+      newTrip;
+
     // Fetch the user name for the new trip
     fetch(`http://localhost:3000/api/users/${user_id}`)
       .then((res) => res.json())
@@ -49,19 +49,30 @@ function App() {
         const tripWithUserName = {
           ...newTrip,
           user_name: userData.user_name,
-          trip_id: id // Include trip ID in the object
+          trip_id: id, // Include trip ID in the object
         };
         setTrips((prevTrips) => [...prevTrips, tripWithUserName]);
       })
       .catch((error) => console.error(error));
   };
 
+  const handleDeleteTrip = async (tripId) => {
+    try {
+      await fetch(`http://localhost:3000/api/trips/${tripId}`, {
+        method: "DELETE",
+      });
+      // Remove the deleted trip from the trips state
+      setTrips((prevTrips) => prevTrips.filter((trip) => trip.id !== tripId));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
       <nav>
         <ul>
-          <li style={{ position: "absolute", top: 25, left: 50 }}>
+          <li li className="navbar-brand">
             <h1>Trippello</h1>
           </li>
           {user ? (
@@ -98,29 +109,40 @@ function App() {
             element={
               <>
                 {user ? (
-                <h1>Hi {user?.user_name || user?.user_name}, Let's plan your next trip!</h1>
-              ) : (
-                <h1>Hi {user?.user_name}, Let's plan your next trip!</h1>
-              )}
-
+                  <h1>
+                    Hi {user?.user_name || user?.user_name}, Let's plan your
+                    next trip!
+                  </h1>
+                ) : (
+                  <h1>Hi {user?.user_name}, Let's plan your next trip!</h1>
+                )}
+                <div className="container">
                 <div className="trip-container">
                   {Array.isArray(trips) ? (
                     trips.map((trip) => (
-                      <Link
-                        to={`/trips/${trip.id}/sections`}
-                        key={trip.id}
-                        className="trip-card"
-                      >
-                        <h3>{trip.name}</h3>
-                        <h5>Created by: {trip.user_name}</h5>
-                      </Link>
+                      <div key={trip.id} className="trip-card">
+                        <Link to={`/trips/${trip.id}/sections`}>
+                          <h3>{trip.name}</h3>
+                          <h5>Created by: {trip.user_name}</h5>
+                        </Link>
+                        <div className="delete-button-container">
+                          <button
+                            className="delete-trip-button"
+                            onClick={() => handleDeleteTrip(trip.id)}
+                          >
+                            X
+                          </button>
+                        </div>
+                      </div>
                     ))
                   ) : (
                     <p>Loading trips...</p>
                   )}
                 </div>
-
+                <div className="add-trip-container">
                 <AddTrip onNewTrip={handleNewTrip} user={user} />
+                </div>
+                </div>
               </>
             }
           />
@@ -135,5 +157,4 @@ function App() {
 }
 
 export default App;
-
 

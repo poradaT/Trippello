@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthProvider.jsx";
 import { useParams } from "react-router-dom";
 
-const Nav = ( { user, handleNewTrip } ) => {
- 
-    const { tripId } = useParams();
+const Nav = ({ user, handleNewTrip }) => {
+  const { tripId } = useParams();
   const [trip, setTrip] = useState(null);
   const [error, setError] = useState(null);
 
@@ -29,18 +28,23 @@ const Nav = ( { user, handleNewTrip } ) => {
     return <div>Error: {error}</div>;
   }
 
-    return(
-        <nav className="navbar">
+  return (
+    <nav className="navbar">
       {trip && (
-      <div>
-      <h1>{trip.name}</h1>
-    
-      {/* <h2>
-        From: {new Date(trip.start_date).toLocaleDateString()}   
-        To: {new Date(trip.end_date).toLocaleDateString()}
-      </h2> */}
-    </div> 
-    )}
+        <div className="trip-details">
+          <h1 className="trip-name">{trip.name}</h1>
+          <div className="date-range">
+            <span className="date-label">From:</span>{" "}
+            <span className="date-value">
+              {new Date(trip.start_date).toLocaleDateString()}
+            </span>
+            <span className="date-label">To:</span>{" "}
+            <span className="date-value">
+              {new Date(trip.end_date).toLocaleDateString()}
+            </span>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

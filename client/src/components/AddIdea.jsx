@@ -3,22 +3,20 @@ import { useState } from "react";
 const AddIdea = ({ sectionId, onNewIdea, user }) => {
   const [ideaName, setIdeaName] = useState("");
   const [ideaDescription, setIdeaDescription] = useState("");
+  const [ideaPhoto, setIdeaPhoto] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const formData = {
-        section_id: sectionId,
-        name: ideaName,
-        description: ideaDescription,
-      };
+    const formData = new FormData();
+      formData.append("section_id", sectionId);
+      formData.append("name", ideaName);
+      formData.append("description", ideaDescription);
+      formData.append("photo", ideaPhoto);
 
-      const res = await fetch("/api/ideas", {
+    const res = await fetch("/api/ideas", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+        body: formData,
       });
 
       if (res.ok) {
@@ -26,6 +24,7 @@ const AddIdea = ({ sectionId, onNewIdea, user }) => {
         onNewIdea(sectionId, newIdea); // Pass the sectionId along with the newIdea
         setIdeaName("");
         setIdeaDescription("");
+        setIdeaPhoto(null);
       } else {
         throw new Error("Failed to create idea");
       }
@@ -34,9 +33,13 @@ const AddIdea = ({ sectionId, onNewIdea, user }) => {
     }
   };
 
+  const handlePhotoChange = (e) => {
+    setIdeaPhoto(e.target.files[0]);
+  };
+
   return (
     <div className="add-idea-container">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         <input
           type="text"
           placeholder="Idea"
@@ -48,6 +51,7 @@ const AddIdea = ({ sectionId, onNewIdea, user }) => {
           value={ideaDescription}
           onChange={(e) => setIdeaDescription(e.target.value)}
         ></textarea>
+        <input type="file" name="photo" onChange={handlePhotoChange} />
         <button type="submit" className="add-button">
           Add New Idea
         </button>
