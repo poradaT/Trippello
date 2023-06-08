@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-const Trip = () => {
+import Nav from "./Nav";
+import SectionContainer from "./SectionContainer";
+
+const Trip = ({ user, handleNewTrip }) => {
+  console.log(handleNewTrip)
   const { tripId } = useParams();
   const [trip, setTrip] = useState(null);
   const [sections, setSections] = useState([]);
@@ -44,17 +48,9 @@ const Trip = () => {
 
   return (
     <>
-      {trip && (
-        <>
-          <h1>{trip.name}</h1>
-          <h3>Sections:</h3>
-          {Array.isArray(sections) && sections.map((section) => (
-            <div key={section.id}>
-              <h4>{section.name}</h4>
-            </div>
-          ))}
-        </>
-      )}
+      <Nav user={user} tripId={tripId} onNewTrip={handleNewTrip} />
+      <SectionContainer user={user} tripId={tripId} onNewTrip={handleNewTrip}/>
+
     </>
   );
 };

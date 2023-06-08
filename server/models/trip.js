@@ -6,45 +6,77 @@ const db = require("./index");
 //   return rows;
 // };
 
-const getAllTrips = async (userId) => {
-    const query = `
-      SELECT trips.* 
-      FROM trips 
-      INNER JOIN trip_members ON trip_members.trip_id = trips.id 
-      WHERE trip_members.user_id = $1
-    `;
-    const values = [userId];
-    const { rows } = await db.query(query, values);
+const getAllTrips = async () => {
+    const query = "SELECT trips.*, users.user_name FROM trips INNER JOIN users ON trips.user_id = users.id";
+    const { rows } = await db.query(query);
     return rows;
   };
-  
-// const getTripById = async (tripId) => {
-//   const query = "SELECT * FROM trips WHERE id = $1";
-//   const { rows } = await db.query(query, [tripId]);
-//   return rows[0];
-// };
 
-const getTripById = async (tripId, userId) => {
-    const query = `
-      SELECT trips.* 
-      FROM trips 
-      INNER JOIN trip_members ON trip_members.trip_id = trips.id 
-      WHERE trip_members.user_id = $1 AND trips.id = $2
-    `;
-    const values = [userId, tripId];
-    const { rows } = await db.query(query, values);
-    return rows[0];
-  };
+// const getAllTrips = async (userId) => {
+//     const query = `
+//       SELECT trips.* 
+//       FROM trips 
+//       INNER JOIN trip_members ON trip_members.trip_id = trips.id 
+//       WHERE trip_members.user_id = $1
+//     `;
+//     const values = [userId];
+//     const { rows } = await db.query(query, values);
+//     return rows;
+//   };
+  
+const getTripById = async (tripId) => {
+  const query = "SELECT * FROM trips WHERE id = $1";
+  const { rows } = await db.query(query, [tripId]);
+  return rows[0];
+};
+
+// const getTripById = async (tripId, userId) => {
+//     const query = `
+//       SELECT trips.* 
+//       FROM trips 
+//       INNER JOIN trip_members ON trip_members.trip_id = trips.id 
+//       WHERE trip_members.user_id = $1 AND trips.id = $2
+//     `;
+//     const values = [userId, tripId];
+//     const { rows } = await db.query(query, values);
+//     return rows[0];
+//   };
+
+// const createTrip = async (trip) => {
+//     const { user_id, name, start_date, end_date, is_public, is_active } = trip;
+//     const query =
+//       "INSERT INTO trips (user_id, name, start_date, end_date, is_public, is_active) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *";
+//     const values = [user_id, name, start_date, end_date, is_public, is_active];
+//     const { rows } = await db.query(query, values);
+//     return rows[0];
+//   };
 
 const createTrip = async (trip) => {
     const { user_id, name, start_date, end_date, is_public, is_active } = trip;
-    const query =
-      "INSERT INTO trips (user_id, name, start_date, end_date, is_public, is_active) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *";
-    const values = [user_id, name, start_date, end_date, is_public, is_active];
-    const { rows } = await db.query(query, values);
-    return rows[0];
+    const insertQuery = `
+      INSERT INTO trips (user_id, name, start_date, end_date, is_public, is_active)
+      VALUES ($1, $2, $3, $4, $5, $6)
+      RETURNING *;
+    `;
+    const selectQuery = `
+      SELECT trips.*, users.user_name
+      FROM trips
+      JOIN users ON trips.user_id = users.id
+      WHERE trips.id = $1;
+    `;
+    const insertValues = [user_id, name, start_date, end_date, is_public, is_active];
+  
+    try {
+      const { rows } = await db.query(insertQuery, insertValues);
+      const tripId = rows[0].id;
+      const { rows: selectedRows } = await db.query(selectQuery, [tripId]);
+      return selectedRows[0];
+    } catch (error) {
+      throw new Error("Failed to create trip");
+    }
   };
-
+  
+  
   const updateTripById = async (tripId, tripUpdates) => {
     const { name, start_date, end_date, is_public, is_active } = tripUpdates;
     const query =

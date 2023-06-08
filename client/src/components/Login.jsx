@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthProvider";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 
-const Login = () => {
-    const { login, user } = useAuth();
-    const navigate = useNavigate();
+const Login = () => { 
+  const { login, user } = useAuth();
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,14 +12,16 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const formData = {
         email: email,
         password: password,
       };
-      await login(formData); 
-      navigate("/"); 
+      await login(formData);
+      console.log(formData);
+
+      navigate("/");
+      window.location.reload();
     } catch (err) {
       setError("Invalid email or password");
     }
@@ -58,3 +60,4 @@ const Login = () => {
 };
 
 export default Login;
+

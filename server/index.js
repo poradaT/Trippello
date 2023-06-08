@@ -16,25 +16,37 @@ const usersRouter = require("./controllers/users");
 const tripsRouter = require("./controllers/trips");
 const sectionsRouter = require("./controllers/tripSections");
 const ideasRouter = require("./controllers/ideas");
+const commentsRouter = require("./controllers/comments");
 
 const app = express();
 const PORT = process.env.HTTP_PORT || 3000;
+app.use(
+    session({
+      secret: process.env.SECRET_KEY,
+      resave: false,
+      saveUninitialized: false,
+      store: new pgSession({
+        pool: db,
+        createTableIfMissing: true,
+      }),
+    })
+  );
 
 app.use(express.static("client"));
 app.use(express.json());
 app.use(cors());
 
-app.use(
-  session({
-    secret: process.env.SECRET_KEY,
-    resave: false,
-    saveUninitialized: false,
-    store: new pgSession({
-      pool: db,
-      createTableIfMissing: true,
-    }),
-  })
-);
+// app.use(
+//   session({
+//     secret: process.env.SECRET_KEY,
+//     resave: false,
+//     saveUninitialized: false,
+//     store: new pgSession({
+//       pool: db,
+//       createTableIfMissing: true,
+//     }),
+//   })
+// );
 
 app.use(LoggerMiddleware);
 
@@ -44,7 +56,8 @@ app.use(
   usersRouter,
   tripsRouter,
   sectionsRouter,
-  ideasRouter
+  ideasRouter,
+  commentsRouter
 );
 
 app.use(errorHandlerMiddleware);

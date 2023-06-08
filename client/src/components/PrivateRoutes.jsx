@@ -5,13 +5,10 @@ const PrivateRoutes = ({ redirectTo }) => {
   const { isLoadingUser, user } = useAuth();
   const navigate = useNavigate(); 
 
-  if (isLoadingUser) return <p>Loading ...</p>;
+  if (isLoadingUser || !user) return <p>Loading ...</p>;
 
-  return user ? (
-    <Outlet />
-  ) : (
-    <Navigate to={redirectTo} replace={true} /> 
-  );
+  return user? <Outlet /> : <Navigate to={redirectTo} replace /> 
+
 };
 
 export default PrivateRoutes;

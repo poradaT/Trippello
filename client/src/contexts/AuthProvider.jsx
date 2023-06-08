@@ -55,13 +55,16 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify(fields),
       });
       const data = await res.json();
+      
       if (res.status === 200) {
-        setUser(data.user); 
+        setUser(data);
         setIsLoadingUser(false);
+        console.log(user)
       } else {
         throw new Error(data.message);
       }
     } catch (err) {
+      setIsLoadingUser(false);
       throw new Error(err.message);
     }
   };  
@@ -85,6 +88,7 @@ export const AuthProvider = ({ children }) => {
         throw new Error(data.message);
       }
     } catch (err) {
+      setIsLoadingUser(false);
       throw new Error(err.message);
     }
   };
