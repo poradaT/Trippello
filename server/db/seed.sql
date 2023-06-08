@@ -24,15 +24,15 @@ INSERT INTO sections (trip_id, name) VALUES
   (3, 'Trails'),
   (3, 'Campsites');
 
-INSERT INTO ideas (section_id, name, description) VALUES
-  (1, 'Eiffel Tower', 'Must-visit landmark in Paris'),
-  (1, 'Louvre Museum', 'Famous art museum in Paris'),
-  (2, 'Le Jules Verne', 'Fine dining restaurant with a view of the Eiffel Tower'),
-  (3, 'Paradise Beach', 'Beautiful sandy beach with crystal clear water'),
-  (4, 'Beachfront Resort', 'Luxurious hotel by the beach'),
-  (5, 'Mountain View Trail', 'Scenic trail with panoramic views'),
-  (6, 'Riverside Campground', 'Campsite by the river with stunning nature surroundings');
-
+INSERT INTO ideas (section_id, name, description, photo_url) VALUES
+  (1, 'Eiffel Tower', 'Must-visit landmark in Paris', NULL),
+  (1, 'Louvre Museum', 'Famous art museum in Paris', NULL),
+  (2, 'Le Jules Verne', 'Fine dining restaurant with a view of the Eiffel Tower', NULL),
+  (3, 'Paradise Beach', 'Beautiful sandy beach with crystal clear water', NULL),
+  (4, 'Beachfront Resort', 'Luxurious hotel by the beach', NULL),
+  (5, 'Mountain View Trail', 'Scenic trail with panoramic views', NULL),
+  (6, 'Riverside Campground', 'Campsite by the river with stunning natural surroundings', NULL);
+  
 INSERT INTO comments (user_id, idea_id, comment, comment_date) VALUES
   (1, 1, 'I loved visiting the Eiffel Tower!', '2023-06-12'),
   (2, 1, 'Me too! It was an amazing experience.', '2023-06-13'),

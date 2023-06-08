@@ -1,5 +1,6 @@
 const db = require("./index");
 
+
 const getAllIdeas = async () => {
   const query = "SELECT * FROM ideas";
   const { rows } = await db.query(query);
@@ -14,13 +15,14 @@ const getIdeasBySectionId = async (sectionId) => {
 };
 
 const createIdea = async (idea) => {
-  const { section_id, name, description } = idea;
-  const query =
-    "INSERT INTO ideas (section_id, name, description) VALUES ($1, $2, $3) RETURNING *";
-  const values = [section_id, name, description];
-  const { rows } = await db.query(query, values);
-  return rows[0];
-};
+    const { section_id, name, description, photo } = idea;
+    const photoUrl = photo ? photo.path : null;
+    const query =
+      "INSERT INTO ideas (section_id, name, description, photo_url) VALUES ($1, $2, $3, $4) RETURNING *";
+    const values = [section_id, name, description, photoUrl];
+    const { rows } = await db.query(query, values);
+    return rows[0];
+  };
 
 const updateIdeaById = async (ideaId, ideaUpdates) => {
   const { name, description } = ideaUpdates;
@@ -32,9 +34,9 @@ const updateIdeaById = async (ideaId, ideaUpdates) => {
 };
 
 const deleteIdeaById = async (ideaId) => {
-  const query = "DELETE FROM ideas WHERE id = $1";
-  await db.query(query, [ideaId]);
-};
+    const query = "DELETE FROM ideas WHERE id = $1";
+    await db.query(query, [ideaId]);
+  };
 
 module.exports = {
   getAllIdeas,

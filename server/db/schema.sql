@@ -55,7 +55,8 @@ CREATE TABLE ideas (
     REFERENCES sections(id) 
     ON DELETE CASCADE,
   name VARCHAR(255) NOT NULL,
-  description TEXT
+  description TEXT,
+  photo_url VARCHAR(255)
 );
 
 CREATE TABLE comments (

@@ -53,7 +53,7 @@ Alternatively, you can use `node app.js` to start the server without nodemon.
 ```npm install```
 
 3. Start the client development server:
-```npm run dev```
+```npm start```
 
 This will launch the Trippello web application in your browser.
 

@@ -50,6 +50,8 @@ app.use(cors());
 
 app.use(LoggerMiddleware);
 
+app.use('/uploads', express.static(__dirname + '/uploads'));
+
 app.use(
   "/api",
   sessionsRouter,
