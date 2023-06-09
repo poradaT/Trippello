@@ -1,6 +1,5 @@
 const db = require("./index");
 
-
 const getAllIdeas = async () => {
   const query = "SELECT * FROM ideas";
   const { rows } = await db.query(query);
@@ -15,28 +14,29 @@ const getIdeasBySectionId = async (sectionId) => {
 };
 
 const createIdea = async (idea) => {
-    const { section_id, name, description, photo } = idea;
-    const photoUrl = photo ? photo.path : null;
-    const query =
-      "INSERT INTO ideas (section_id, name, description, photo_url) VALUES ($1, $2, $3, $4) RETURNING *";
-    const values = [section_id, name, description, photoUrl];
-    const { rows } = await db.query(query, values);
-    return rows[0];
-  };
+  const { section_id, name, description, photo } = idea;
+  const photoUrl = photo ? photo.path : null;
+  const query =
+    "INSERT INTO ideas (section_id, name, description, photo_url) VALUES ($1, $2, $3, $4) RETURNING *";
+  const values = [section_id, name, description, photoUrl];
+  const { rows } = await db.query(query, values);
+  return rows[0];
+};
 
 const updateIdeaById = async (ideaId, ideaUpdates) => {
-  const { name, description } = ideaUpdates;
+  const { section_id, name, description, photo } = ideaUpdates;
+  const photoUrl = photo ? photo.path : null;
   const query =
-    "UPDATE ideas SET name = $2, description = $3 WHERE id = $1 RETURNING *";
-  const values = [ideaId, name, description];
+    "UPDATE ideas SET section_id = $2, name = $3, description = $4, photo_url = $5 WHERE id = $1 RETURNING *";
+  const values = [ideaId, section_id, name, description, photoUrl];
   const { rows } = await db.query(query, values);
   return rows[0];
 };
 
 const deleteIdeaById = async (ideaId) => {
-    const query = "DELETE FROM ideas WHERE id = $1";
-    await db.query(query, [ideaId]);
-  };
+  const query = "DELETE FROM ideas WHERE id = $1";
+  await db.query(query, [ideaId]);
+};
 
 module.exports = {
   getAllIdeas,

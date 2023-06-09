@@ -76,16 +76,17 @@ const Comment = ({ ideaId, user }) => {
                   <h6 style={{ marginTop: "4px" }}>
                     Commented by: {comment.user_name}
                   </h6>
-                  <button 
-                  className="delete-comment-button"
-                  onClick={() => deleteComment(comment.id)}>
+                  <button
+                    className="delete-comment-button"
+                    onClick={() => deleteComment(comment.id)}
+                  >
                     X
                   </button>
                 </div>
               ))}
             </div>
           ) : (
-            <div>
+            <div className="no-comment">
               <p>No comments yet</p>
             </div>
           )}

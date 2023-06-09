@@ -12,6 +12,7 @@ import "./App.css";
 function App() {
   const { user, logout } = useAuth();
   const [trips, setTrips] = useState([]);
+  const [hoveredTrip, setHoveredTrip] = useState(null);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -49,7 +50,7 @@ function App() {
         const tripWithUserName = {
           ...newTrip,
           user_name: userData.user_name,
-          trip_id: id, // Include trip ID in the object
+          trip_id: id,
         };
         setTrips((prevTrips) => [...prevTrips, tripWithUserName]);
       })
@@ -68,11 +69,19 @@ function App() {
     }
   };
 
+  const handleMouseEnter = (tripId) => {
+    setHoveredTrip(tripId);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredTrip(null);
+  };
+
   return (
     <>
       <nav>
         <ul>
-          <li li className="navbar-brand">
+          <li className="navbar-brand">
             <h1>Trippello</h1>
           </li>
           {user ? (
@@ -117,31 +126,38 @@ function App() {
                   <h1>Hi {user?.user_name}, Let's plan your next trip!</h1>
                 )}
                 <div className="container">
-                <div className="trip-container">
-                  {Array.isArray(trips) ? (
-                    trips.map((trip) => (
-                      <div key={trip.id} className="trip-card">
-                        <Link to={`/trips/${trip.id}/sections`}>
-                          <h3>{trip.name}</h3>
-                          <h5>Created by: {trip.user_name}</h5>
-                        </Link>
-                        <div className="delete-button-container">
-                          <button
-                            className="delete-trip-button"
-                            onClick={() => handleDeleteTrip(trip.id)}
-                          >
-                            X
-                          </button>
+                  <div className="trip-container">
+                    {Array.isArray(trips) ? (
+                      trips.map((trip) => (
+                        <div
+                          key={trip.id}
+                          className="trip-card"
+                          onMouseEnter={() => handleMouseEnter(trip.id)}
+                          onMouseLeave={handleMouseLeave}
+                        >
+                          <Link to={`/trips/${trip.id}/sections`}>
+                            <h3>{trip.name}</h3>
+                            {hoveredTrip === trip.id && (
+                              <h5>Created by: {trip.user_name}</h5>
+                            )}
+                          </Link>
+                          <div className="delete-button-container">
+                            <button
+                              className="delete-trip-button"
+                              onClick={() => handleDeleteTrip(trip.id)}
+                            >
+                              𝗫
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    ))
-                  ) : (
-                    <p>Loading trips...</p>
-                  )}
-                </div>
-                <div className="add-trip-container">
-                <AddTrip onNewTrip={handleNewTrip} user={user} />
-                </div>
+                      ))
+                    ) : (
+                      <p>Loading trips...</p>
+                    )}
+                  </div>
+                  <div className="add-trip-container">
+                    <AddTrip onNewTrip={handleNewTrip} user={user} />
+                  </div>
                 </div>
               </>
             }
@@ -157,4 +173,3 @@ function App() {
 }
 
 export default App;
-

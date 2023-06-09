@@ -6,6 +6,6 @@ const hashedPasswords = {
   password3: bcrypt.hashSync("password3", bcrypt.genSaltSync(10)),
 };
 
-  console.log(hashedPasswords)
+console.log(hashedPasswords);
 
 module.exports = hashedPasswords;

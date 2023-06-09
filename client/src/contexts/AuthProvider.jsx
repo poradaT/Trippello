@@ -55,11 +55,11 @@ export const AuthProvider = ({ children }) => {
         body: JSON.stringify(fields),
       });
       const data = await res.json();
-      
+
       if (res.status === 200) {
         setUser(data);
         setIsLoadingUser(false);
-        console.log(user)
+        console.log(user);
       } else {
         throw new Error(data.message);
       }
@@ -67,7 +67,7 @@ export const AuthProvider = ({ children }) => {
       setIsLoadingUser(false);
       throw new Error(err.message);
     }
-  };  
+  };
 
   const register = async (fields) => {
     setIsLoadingUser(true);
@@ -94,7 +94,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoadingUser, login, logout, register }}>
+    <AuthContext.Provider
+      value={{ user, isLoadingUser, login, logout, register }}
+    >
       {children}
     </AuthContext.Provider>
   );

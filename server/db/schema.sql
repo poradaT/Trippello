@@ -1,4 +1,3 @@
-DROP TABLE IF EXISTS attachments CASCADE;
 DROP TABLE IF EXISTS comments CASCADE;
 DROP TABLE IF EXISTS ideas CASCADE;
 DROP TABLE IF EXISTS sections CASCADE;
@@ -16,10 +15,7 @@ CREATE TABLE users (
 CREATE TABLE trips (
   id SERIAL PRIMARY KEY,
   user_id INT,
-  CONSTRAINT fk_trips_users
-    FOREIGN KEY(user_id)
-    REFERENCES users(id)
-    ON DELETE CASCADE,
+  CONSTRAINT fk_trips_users FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
   name VARCHAR(255) NOT NULL,
   start_date DATE NOT NULL,
   end_date DATE NOT NULL,
@@ -29,31 +25,23 @@ CREATE TABLE trips (
 
 CREATE TABLE trip_members (
   id SERIAL PRIMARY KEY,
-  user_id INT, 
-        FOREIGN KEY (user_id) 
-        REFERENCES users(id) 
-        ON DELETE CASCADE,
+  user_id INT,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   trip_id INT,
-        FOREIGN KEY (trip_id) 
-        REFERENCES trips(id) 
-        ON DELETE CASCADE
+  FOREIGN KEY (trip_id) REFERENCES trips(id) ON DELETE CASCADE
 );
 
 CREATE TABLE sections (
   id SERIAL PRIMARY KEY,
   trip_id INT,
-  FOREIGN KEY (trip_id) 
-    REFERENCES trips(id) 
-    ON DELETE CASCADE,
+  FOREIGN KEY (trip_id) REFERENCES trips(id) ON DELETE CASCADE,
   name VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE ideas (
   id SERIAL PRIMARY KEY,
   section_id INT,
-  FOREIGN KEY (section_id) 
-    REFERENCES sections(id) 
-    ON DELETE CASCADE,
+  FOREIGN KEY (section_id) REFERENCES sections(id) ON DELETE CASCADE,
   name VARCHAR(255) NOT NULL,
   description TEXT,
   photo_url VARCHAR(255)
@@ -62,23 +50,9 @@ CREATE TABLE ideas (
 CREATE TABLE comments (
   id SERIAL PRIMARY KEY,
   user_id INT,
-  FOREIGN KEY (user_id) 
-    REFERENCES users(id) 
-    ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
   idea_id INT,
-  FOREIGN KEY (idea_id) 
-    REFERENCES ideas(id) 
-    ON DELETE CASCADE,
+  FOREIGN KEY (idea_id) REFERENCES ideas(id) ON DELETE CASCADE,
   comment TEXT,
   comment_date DATE
-);
-
-CREATE TABLE attachments (
-  id SERIAL PRIMARY KEY,
-  idea_id INT,
-  FOREIGN KEY (idea_id) 
-    REFERENCES ideas(id) 
-    ON DELETE CASCADE,
-  filename VARCHAR(255) NOT NULL,
-  location TEXT
 );

@@ -17,8 +17,7 @@ const createTripSection = async (section) => {
 
 const updateTripSectionById = async (sectionId, sectionUpdates) => {
   const { section_name } = sectionUpdates;
-  const query =
-    "UPDATE sections SET name = $2 WHERE id = $1 RETURNING *";
+  const query = "UPDATE sections SET name = $2 WHERE id = $1 RETURNING *";
   const values = [sectionId, section_name];
   const { rows } = await db.query(query, values);
   return rows[0];

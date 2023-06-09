@@ -67,20 +67,6 @@ const SectionContainer = ({ user, handleNewTrip }) => {
     setSectionIdCounter((prevCounter) => prevCounter + 1);
   };
 
-  const handleNewIdea = (sectionId, newIdea) => {
-    setSections((prevSections) => {
-      return prevSections.map((section) => {
-        if (section.id === sectionId) {
-          return {
-            ...section,
-            ideas: [...section.ideas, newIdea],
-          };
-        }
-        return section;
-      });
-    });
-  };
-
   const handleDeleteSection = async (sectionId) => {
     try {
       await fetch(`http://localhost:3000/api/trips/sections/${sectionId}`, {
@@ -119,6 +105,48 @@ const SectionContainer = ({ user, handleNewTrip }) => {
     }
   };
 
+  const handleNewIdea = (sectionId, newIdea) => {
+    setSections((prevSections) => {
+      return prevSections.map((section) => {
+        if (section.id === sectionId) {
+          return {
+            ...section,
+            ideas: [...section.ideas, newIdea],
+          };
+        }
+        return section;
+      });
+    });
+  };
+
+  const handleUpdateIdea = (sectionId, updatedIdea) => {
+    setSections((prevSections) =>
+      prevSections.map((section) => {
+        if (section.id === sectionId) {
+          const updatedIdeas = section.ideas.map((idea) => {
+            if (idea.id === updatedIdea.id) {
+              return updatedIdea;
+            }
+            return idea;
+          });
+          return {
+            ...section,
+            ideas: updatedIdeas,
+          };
+        }
+        return section;
+      })
+    );
+  };
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
+  if (!trip || !sections) {
+    return <div>Loading...</div>;
+  }
+
   if (error) {
     return <div>Error: {error}</div>;
   }
@@ -143,7 +171,7 @@ const SectionContainer = ({ user, handleNewTrip }) => {
                   className="delete-section-button"
                   onClick={() => handleDeleteSection(section.id)}
                 >
-                  X
+                  𝗫
                 </button>
               </div>
               <AddIdea
@@ -156,6 +184,7 @@ const SectionContainer = ({ user, handleNewTrip }) => {
                 user={user}
                 ideasProp={section.ideas}
                 handleDeleteIdea={handleDeleteIdea}
+                handleUpdateIdea={handleUpdateIdea}
               />
             </div>
           ))}

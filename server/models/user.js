@@ -19,22 +19,22 @@ const getUserById = async (userId) => {
 };
 
 const createUser = async (user) => {
-    const { user_name, email, password_hash } = user;
-    const query =
-      'INSERT INTO users (user_name, email, password_hash) VALUES ($1, $2, $3) RETURNING *';
-    const values = [user_name, email, password_hash];
-    const { rows } = await db.query(query, values);
-    return rows[0];
-  };
+  const { user_name, email, password_hash } = user;
+  const query =
+    "INSERT INTO users (user_name, email, password_hash) VALUES ($1, $2, $3) RETURNING *";
+  const values = [user_name, email, password_hash];
+  const { rows } = await db.query(query, values);
+  return rows[0];
+};
 
-  const updateUserById = async (userId, userUpdates) => {
-    const { user_name, email, password_hash } = userUpdates;
-    const query =
-      'UPDATE users SET user_name = $2, email = $3, password_hash = $4 WHERE id = $1 RETURNING *';
-    const values = [userId, user_name, email, password_hash];
-    const { rows } = await db.query(query, values);
-    return rows[0];
-  };
+const updateUserById = async (userId, userUpdates) => {
+  const { user_name, email, password_hash } = userUpdates;
+  const query =
+    "UPDATE users SET user_name = $2, email = $3, password_hash = $4 WHERE id = $1 RETURNING *";
+  const values = [userId, user_name, email, password_hash];
+  const { rows } = await db.query(query, values);
+  return rows[0];
+};
 
 const deleteUserById = async (userId) => {
   const query = "DELETE FROM users WHERE id = $1";

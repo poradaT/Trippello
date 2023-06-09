@@ -7,7 +7,7 @@ const Register = () => {
   const [user, setUser] = useState({
     user_name: "",
     email: "",
-    password: ""
+    password: "",
   });
 
   const handleChange = (e) => {

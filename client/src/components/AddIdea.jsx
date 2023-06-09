@@ -8,20 +8,20 @@ const AddIdea = ({ sectionId, onNewIdea, user }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-    const formData = new FormData();
+      const formData = new FormData();
       formData.append("section_id", sectionId);
       formData.append("name", ideaName);
       formData.append("description", ideaDescription);
       formData.append("photo", ideaPhoto);
 
-    const res = await fetch("/api/ideas", {
+      const res = await fetch("/api/ideas", {
         method: "POST",
         body: formData,
       });
 
       if (res.ok) {
         const newIdea = await res.json();
-        onNewIdea(sectionId, newIdea); // Pass the sectionId along with the newIdea
+        onNewIdea(sectionId, newIdea);
         setIdeaName("");
         setIdeaDescription("");
         setIdeaPhoto(null);
