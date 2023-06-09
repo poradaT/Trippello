@@ -33,7 +33,7 @@ const Login = () => {
 
   return (
     <div className="login__container">
-      <h2>Login</h2>
+      <h2 className="login-header">Login</h2>
       <form className="login__form" onSubmit={handleSubmit}>
         <input
           type="email"
@@ -52,8 +52,8 @@ const Login = () => {
         <input type="submit" value="Login" />
       </form>
       {error && <p>{error}</p>}
-      <p>
-        Don't have an account? <Link to="/register">Register</Link>
+      <p className="dont-have-account">
+        Don't have an account? ≫ <Link to="/register" className="dont-have-account">Register</Link>
       </p>
     </div>
   );

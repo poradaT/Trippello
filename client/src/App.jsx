@@ -118,12 +118,12 @@ function App() {
             element={
               <>
                 {user ? (
-                  <h1>
+                  <h1 className="hi">
                     Hi {user?.user_name || user?.user_name}, Let's plan your
                     next trip!
                   </h1>
                 ) : (
-                  <h1>Hi {user?.user_name}, Let's plan your next trip!</h1>
+                  <h1 className="hi">Hi {user?.user_name}, Let's plan your next trip!</h1>
                 )}
                 <div className="container">
                   <div className="trip-container">

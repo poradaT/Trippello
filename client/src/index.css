@@ -5,26 +5,37 @@
 }
 a {
   text-decoration: none;
+  color: rgb(232, 232, 232);
 }
 body {
   margin: 0;
   padding: 0;
+  background-image: url("https://images.unsplash.com/photo-1523978591478-c753949ff840?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
+
+
 
 /* Nav bar */
 .navbar {
   width: 100%;
-  background-color: #f1f7ee;
+  background-color: rgba(255, 255, 255, 0.086);
+  border: 0.5px solid rgba(255, 255, 255, 0.394);
+  border-radius: 8px;
   height: 10vh;
-  border-bottom: 1px solid #ddd;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: 10px;
   padding: 20px;
-  padding-bottom: 60px;
+  padding-top: 40px;
+  padding-bottom: 40px;
 }
 nav {
-  background-color: #f1f7ee;
+  background-color: rgba(255, 255, 255, 0.23);
+  border: none;
   padding: 10px;
 }
 nav ul {
@@ -57,18 +68,19 @@ nav button:hover {
 .trip-details {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
+  justify-content: center;
+  flex-direction: row;
   align-items: flex-start;
 }
 .trip-name {
-  font-size: 24px;
-  font-weight: bold;
+  font-size: 20px;
 }
 .date-range {
   display: flex;
   align-items: center;
-  font-size: 16px;
+  font-size: 15px;
+  margin-top: 20px;
+  margin-left: 20px;
 }
 .date-label {
   margin-right: 5px;
@@ -85,13 +97,26 @@ nav button:hover {
   margin-top: -30px;
 }
 
+.hi {
+  color: rgb(39, 36, 36);
+  border: none;
+  background-color: rgba(255, 255, 255, 0.243);
+  border: 0.5px solid rgba(255, 255, 255, 0.394);
+  padding: 10px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+
 /* Login */
 .login__form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+	width: 100%;
+	height: 100vh;
+	/* display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;  */
 }
+
 .login__form > label {
   margin-bottom: 15px;
 }
@@ -100,6 +125,13 @@ nav button:hover {
   padding: 10px 15px;
   margin-bottom: 15px;
 }
+
+.login__form > .user-name {
+  width: 70%;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+}
+
 .login__form > button {
   background-color: #367e18;
   color: #fff;
@@ -109,6 +141,15 @@ nav button:hover {
   font-size: 16px;
   outline: none;
   width: 200px;
+}
+
+.dont-have-account {
+  color: white;
+}
+
+.login-header {
+  margin-top: 30px;
+  color: rgb(33, 33, 33);
 }
 
 /* container for trips and add trip */
@@ -131,9 +172,9 @@ nav button:hover {
 
 .trip-card {
   position: relative;
-  background-color: rgba(101, 144, 163, 0.444);
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  background-color: rgba(5, 41, 41, 0.909);
+  border: 0.5px solid #6b6b6b;
+  border-radius: 8px;
   padding: 5px;
   text-align: center;
   transition: background-color 0.3s ease;
@@ -141,6 +182,8 @@ nav button:hover {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
 }
 
 .delete-trip-button {
@@ -151,7 +194,7 @@ nav button:hover {
 }
 
 .trip-card:hover {
-  background-color: #1e809eba;
+  background-color: rgba(93, 131, 147, 0.675);
 }
 
 /* Add trip from */
@@ -218,7 +261,7 @@ nav button:hover {
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 10px;
-  background-color: rgba(101, 144, 163, 0.444);
+  background-color:rgba(255, 255, 255, 0.271);
 }
 
 .add-section-container {
@@ -254,7 +297,7 @@ nav button:hover {
 }
 
 .add-section-container button:hover {
-  background-color: #3577e0;
+  background-color: #45a049;
 }
 
 .delete-button-container {
@@ -313,7 +356,7 @@ nav button:hover {
 }
 
 .edit-idea-button:hover {
-  background-color: #45a049;
+  background-color: #c36870bb;
 }
 
 
@@ -339,10 +382,10 @@ nav button:hover {
 }
 
 .add-button {
-  background-color: #4c86af;
+  background-color: #64be3af7;
   color: white;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: 3px;
   border: none;
   cursor: pointer;
 }
@@ -365,6 +408,7 @@ textarea {
   width: 100%;
   padding: 8px;
   margin-bottom: 16px;
+  margin-left: ;
   border: 1px solid #ddd;
   border-radius: 4px;
 }
@@ -376,44 +420,25 @@ input[type="file"] {
 .button-container {
   display: flex;
   justify-content: flex-end;
+  margin-left: 140px;
 }
 
-.update-btn {
+.update-btn,
+.cancel-btn {
   background-color: #008cba;
-  background-color: #4caf50;
   color: white;
   border: none;
-  padding: 8px 16px;
-  font-size: 16px;
+  padding: 6px 12px;
+  font-size: 14px;
   cursor: pointer;
-  margin-left: 8px;
+  margin-left: 5px;
 }
 
-.cancel-btn {
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  font-size: 16px;
-  cursor: pointer;
-  margin-left: 8px;
-}
-
-.update-btn {
-  background-color: #008cba;
-}
-
-.update-btn:hover {
-  background-color: #575857;
-}
-
-.cancel-btn {
-  background-color: #45a049;
-}
-
+.update-btn:hover,
 .cancel-btn:hover {
   background-color: #575857;
 }
+
 
 /* Comments */
 .comment-container {
@@ -423,7 +448,7 @@ input[type="file"] {
 .comment-link {
   background-color: transparent;
   border: none;
-  color: rgb(117, 117, 234);
+  color: rgb(22, 112, 126);
   text-decoration: underline;
   cursor: pointer;
 }
@@ -434,11 +459,12 @@ input[type="file"] {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 999;
-  background-color: rgba(144, 130, 138, 0.831);
+  background-color: rgba(0, 0, 0, 0.658);
   border: 1px solid #ccc;
   padding: 50px;
-  width: 80%;
+  width: 60%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
 }
 
 .delete-comment-button {
@@ -447,7 +473,7 @@ input[type="file"] {
   right: 5px;
   background-color: transparent;
   border: none;
-  color: rgba(124, 110, 124, 0.897);
+  color: rgba(0, 0, 0, 0.914);
   cursor: pointer;
 }
 
@@ -457,7 +483,7 @@ input[type="file"] {
   right: 5px;
   background-color: transparent;
   border: none;
-  color: rgb(105, 22, 22);
+  color: white;
   cursor: pointer;
 }
 
@@ -487,7 +513,7 @@ input[type="file"] {
 }
 
 .add-comment-container .add-comment-button {
-  background-color: rgba(124, 110, 124, 0.897);
+  background-color: rgb(23, 157, 178);
   border: none;
   color: white;
   border-radius: 8px;
