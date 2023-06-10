@@ -1,6 +1,30 @@
 # Trippello
 
-Trippello is a web application for managing and organizing your trips. This repository contains both the client-side and server-side code for Trippello.
+Trippello is a web application designed to simplify trip planning by providing a collaborative platform where users can gather and share ideas for their trips. Whether you're exploring a new city or embarking on an adventure in the great outdoors, Trippello empowers you and your friends to contribute ideas for attractions, hotels, restaurants, and more. With Trippello, planning your dream trip becomes a collaborative and enjoyable experience.
+
+## Features
+
+- Collaborative Trip Planning: Trippello allows you and your friends to contribute ideas for various aspects of your trip, including attractions, hotels, restaurants, and more. Everyone can add their suggestions and recommendations.
+- Interactive Map: Trippello integrates a map feature that enables users to explore and visualize the locations of the suggested attractions, hotels, and restaurants. With the map, you can get a better understanding of the proximity of different places and plan your itinerary accordingly.
+- Comments and Discussions: Users can engage in discussions and leave comments on each trip idea. This feature facilitates communication and enables users to provide additional information, tips, and insights for each suggested location.
+
+## Technologies Used
+
+This repository contains both the client-side and server-side code for Trippello. The application is built using the following technologies:
+
+- Express: A fast and minimalist web application framework for Node.js, providing robust routing, middleware, and essential features for web development.
+- React: A popular JavaScript library for building efficient and reusable user interfaces, offering a smooth and responsive user experience.
+- Node.js: A runtime environment for executing JavaScript code outside of a browser, enabling server-side development and scalable web applications.
+- PostgreSQL: A powerful and open-source relational database management system used by Trippello to store and manage user accounts, trip ideas, comments, and other data.
+
+## User Stories
+
+- As a user, I want to be able to create a trip and have my friends to contribute their ideas.
+- As a user, I want to browse and explore trip ideas shared by others to gain inspiration for my own trips.
+- As a user, I want to add attractions, hotels, restaurants, and other points of interest to a trip to create a comprehensive itinerary.
+- As a user, I want to view the details and descriptions of each idea to make informed decisions.
+- As a user, I want to leave comments and engage in discussions with other users regarding specific trip ideas.
+- As a user, I want to search for specific locations or points of interest on the map to visualize their proximity to each other.
 
 ## Getting Started
 
@@ -53,7 +77,7 @@ Alternatively, you can use `node app.js` to start the server without nodemon.
 ```npm install```
 
 3. Start the client development server:
-```npm start```
+```npm run dev```
 
 This will launch the Trippello web application in your browser.
 

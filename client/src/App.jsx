@@ -123,10 +123,13 @@ function App() {
                     next trip!
                   </h1>
                 ) : (
-                  <h1 className="hi">Hi {user?.user_name}, Let's plan your next trip!</h1>
+                  <h1 className="hi">
+                    Hi {user?.user_name}, Let's plan your next trip!
+                  </h1>
                 )}
-                <div className="container">
+                <div className="container empty-component">
                   <div className="trip-container">
+                    
                     {Array.isArray(trips) ? (
                       trips.map((trip) => (
                         <div
@@ -160,6 +163,7 @@ function App() {
                   </div>
                 </div>
               </>
+              
             }
           />
           <Route

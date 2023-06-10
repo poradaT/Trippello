@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Idea from "./Idea";
 import AddSection from "./AddSection";
 import AddIdea from "./AddIdea";
+import MapWithSearch from "./Map";
 
 const SectionContainer = ({ user, handleNewTrip }) => {
   const { tripId } = useParams();
@@ -160,7 +161,7 @@ const SectionContainer = ({ user, handleNewTrip }) => {
         onNewTrip={handleNewTrip}
       />
 
-      <div className="section-container">
+      <div className="section-container empty-component">
         {trip &&
           Array.isArray(sections) &&
           sections.map((section) => (
@@ -188,7 +189,12 @@ const SectionContainer = ({ user, handleNewTrip }) => {
               />
             </div>
           ))}
+
       </div>
+      <br />
+      <div className="map-container">
+          <MapWithSearch />
+        </div>
     </div>
   );
 };

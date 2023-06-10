@@ -63,10 +63,12 @@ const Register = () => {
           required
         />
         <input type="submit" value="Register" />
-      </form>
+      
       <p className="dont-have-account">
         Already have an account? ≫ <Link to="/login" className="dont-have-account">Login</Link>
       </p>
+
+      </form>
     </div>
   );
 };

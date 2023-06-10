@@ -32,7 +32,7 @@ const Login = () => {
   }
 
   return (
-    <div className="login__container">
+    <div className="login__container empty-component">
       <h2 className="login-header">Login</h2>
       <form className="login__form" onSubmit={handleSubmit}>
         <input
@@ -50,11 +50,13 @@ const Login = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
         <input type="submit" value="Login" />
-      </form>
-      {error && <p>{error}</p>}
+      
+      {error && <p className="dont-have-account">{error}</p>}
       <p className="dont-have-account">
         Don't have an account? ≫ <Link to="/register" className="dont-have-account">Register</Link>
       </p>
+
+      </form>
     </div>
   );
 };
